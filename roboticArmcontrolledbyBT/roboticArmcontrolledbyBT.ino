@@ -4,6 +4,9 @@
 #include <Adafruit_PCD8544.h>
 Adafruit_PCD8544 display = Adafruit_PCD8544(7, 6, 5, 4, 3);
 Servo menique, anular,  medio, indice, pulgar;
+//Servos referidos al rostro
+Servo ojoHorizontal, ojoVertical;
+
 char valor;
 void setup() {
   // put your setup code here, to run once:
@@ -12,6 +15,8 @@ void setup() {
     display.setContrast(50);
 
   display.display();
+  ojoHorizontal.attach(2);
+  ojoVertical.attach(13);
 menique.attach(8);
 anular.attach(9);
 medio.attach(10);
@@ -23,6 +28,15 @@ abre(medio);
 abre(indice);
 abre(pulgar);
 display.clearDisplay();
+centrar();
+delay(1000);
+arriba();
+delay(1000);
+centrar();
+delay(1000);
+abajo();
+delay(1000);
+centrar();
 }
 
 void loop() {
@@ -176,6 +190,9 @@ cierra(anular);
 abre(medio);
 abre(indice);
 cierra(pulgar);
+for (int i=0;i<3;i++){
+  movimientoAleatorio();
+}
 }
 void ok(){
      cierra(menique);
@@ -183,6 +200,9 @@ cierra(anular);
 cierra(medio);
 cierra(indice);
 abre(pulgar);
+for (int i=0;i<3;i++){
+  movimientoAleatorio();
+}
 }
 void saluda(){
   for (int n=0;n<3;n++){
@@ -199,6 +219,8 @@ cierra(indice);
 cierra(pulgar);
 delay(1000);
   }
+  movimientoAleatorio();
+  movimientoAleatorio();
 }
 void rock(){
      abre(menique);
@@ -206,11 +228,97 @@ cierra(anular);
 cierra(medio);
 abre(indice);
 abre(pulgar);
+for (int i=0;i<3;i++){
+  movimientoAleatorio();
+}
 }
 void abre(Servo motor){
   motor.write(0);
 }
 void cierra (Servo motor){
   motor.write(180);
+}
+void movimientoAleatorio(){
+  int tiempo=(int)random(500,1500);
+  int caso=(int)random(1,8);
+  switch(caso){
+  case 1:
+  arribaIzquierda();
+  delay(tiempo);
+  centrar();
+  break;
+    case 2:
+  arriba();
+  delay(tiempo);
+  centrar();
+  break;
+    case 3:
+  arribaDerecha();
+  delay(tiempo);
+  centrar();
+  break;
+    case 4:
+  izquierda();
+  delay(tiempo);
+  centrar();
+  break;
+    case 5:
+  derecha();
+  delay(tiempo);
+  centrar();
+  break;
+    case 6:
+  abajoIzquierda();
+  delay(tiempo);
+  centrar();
+  break;
+    case 7:
+  abajo();
+  delay(tiempo);
+  centrar();
+  break;
+    case 8:
+  abajoDerecha();
+  delay(tiempo);
+  centrar();
+  break;
+  }
+}
+void centrar(){
+ojoHorizontal.write(90);
+ojoVertical.write(90);
+  
+}
+void izquierda(){
+  ojoHorizontal.write(45);
+  ojoVertical.write(90);
+}
+void derecha(){
+ojoHorizontal.write(135);
+ojoVertical.write(90);
+}
+void abajo(){
+  ojoHorizontal.write(90);
+ojoVertical.write(135);
+}
+void arriba(){
+  ojoHorizontal.write(90);
+ojoVertical.write(45);
+}
+void arribaIzquierda(){
+  ojoHorizontal.write(45);
+ojoVertical.write(45);
+}
+void arribaDerecha(){
+  ojoHorizontal.write(135);
+ojoVertical.write(45);
+}
+void abajoIzquierda(){
+  ojoHorizontal.write(45);
+ojoVertical.write(135);
+}
+void abajoDerecha(){
+    ojoHorizontal.write(135);
+ojoVertical.write(135);
 }
 
